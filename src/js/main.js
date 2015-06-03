@@ -1,17 +1,18 @@
 
 var App = function() {
 	var container;
-	var e;
-	var c;
-	var p;
-	var t;
+	this.Editor;
+	this.Console;
+	this.Preview;
+	this.Toolbar;
 
 	var self = this;
 
 	this.Events = new function() {
 		this.consts = {
 			EVENT_CHANGE:"change",
-			EVENT_CONSOLE:"console"
+			EVENT_CONSOLE:"console",
+			EVENT_RUN:"run"
 		};
 
 		var subscribers = {};
@@ -47,13 +48,13 @@ var App = function() {
 		var node = document.createElement("div");
 		node.id = "main";
 		container.appendChild(node);
-		e = new Editor(node);
-		p = new Preview(node);
-		c = new Console(node);
+		self.Editor = new Editor(node);
+		self.Preview = new Preview(node);
+		self.Console = new Console(node);
 	}
 
 	var initToolbar = function() {
-		t = new Toolbar(container);
+		self.Toolbar = new Toolbar(container);
 	}
 
 	this.init = function() {

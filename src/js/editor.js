@@ -5,7 +5,7 @@ var Editor = function(container) {
 		var node = document.getElementById("editor-textarea");
 		var data = node.value;
 
-		var evt = new Event(Main.Events.consts.EVENT_CHANGE, data);
+		var evt = new FiddleEvent(Main.Events.consts.EVENT_CHANGE, data);
 		Main.Events.publish(evt);
 	};
 
