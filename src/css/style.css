@@ -1,0 +1,41 @@
+html, body {
+	height:100%;
+}
+
+textarea {
+	width:100%;
+	height:100%;
+}
+
+#main {
+	font-family: 'Open Sans', sans-serif;
+	height:100%;
+}
+
+.section {
+	width:33%;
+	height:100%;
+}
+
+.section > .header{
+	font-weight:bold;
+	font-size:2em;
+	text-align:center;
+}
+
+.section > .content {
+	width:100%;
+	height:100%;
+}
+
+#editor {
+	float:left; 
+}
+
+#console {
+	float:right;
+}
+
+#preview {
+	display: inline-block;
+}
