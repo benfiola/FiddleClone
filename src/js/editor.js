@@ -1,5 +1,5 @@
-var Editor = function() {
-	var toReturn = new Component("editor");
+var Editor = function(container) {
+	var toReturn = new Component(container, "editor.html", "editor", {class:"section"});
 
 	var onKeyPress = function() {
 		var node = document.getElementById("editor-textarea");

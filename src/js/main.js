@@ -1,8 +1,12 @@
 
 var App = function() {
+	var container;
 	var e;
 	var c;
 	var p;
+	var t;
+
+	var self = this;
 
 	this.Events = new function() {
 		this.consts = {
@@ -39,10 +43,23 @@ var App = function() {
 		}
 	};
 
+	var initWorkingArea = function() {
+		var node = document.createElement("div");
+		node.id = "main";
+		container.appendChild(node);
+		e = new Editor(node);
+		p = new Preview(node);
+		c = new Console(node);
+	}
+
+	var initToolbar = function() {
+		t = new Toolbar(container);
+	}
+
 	this.init = function() {
-		e = new Editor();
-		c = new Component("console");
-		p = new Preview();
+		container = document.getElementById("container");
+		initWorkingArea();
+		initToolbar();
 	}
 }
 

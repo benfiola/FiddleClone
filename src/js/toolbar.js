@@ -1,5 +1,5 @@
-var Console = function(container) {
-	var toReturn = new Component(container, "console.html", "console", {class:"section"});
+var Toolbar = function(container) {
+	var toReturn = new Component(container, "toolbar.html", "toolbar", {class:"toolbar"});
 
 	var onChange = function(event) {
 
@@ -9,7 +9,7 @@ var Console = function(container) {
 	};
 
 	toReturn.unregisterListeners = function() {
-
+		
 	};
 
 	toReturn.registerListeners();

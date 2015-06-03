@@ -1,10 +1,10 @@
-var Preview = function() {
-	var toReturn = new Component("preview");
+var Preview = function(container) {
+	var toReturn = new Component(container, "preview.html", "preview", {class:"section"});
 
 	var onChange = function(event) {
-		var main = document.getElementById("preview");
-		var node = main.getElementsByClassName("content")[0];
-		node.innerHTML = event.data;
+		var frame = window.frames['preview-iframe'];
+		var doc = (frame.contentDocument) ? frame.contentDocument : frame.contentWindow.document;
+		doc.body.innerHTML=event.data;
 	};
 
 	toReturn.registerListeners = function() {
