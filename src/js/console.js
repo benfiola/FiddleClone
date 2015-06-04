@@ -1,17 +1,26 @@
 var Console = function(container) {
-	var toReturn = new Component(container, "console.html", "console", {class:"section"});
+	var self = this;
 
-	var onChange = function(event) {
+	var init = function() {
+		Component.call(self, container, "console.html", "console", {class:"section"});
+		self.loadContent();
+		registerListeners();
+	}
+
+	var onRunCode = function(event) {
 
 	};
 
-	toReturn.registerListeners = function() {
-	};
-
-	toReturn.unregisterListeners = function() {
+	var registerListeners = function() {
 
 	};
 
-	toReturn.registerListeners();
-	return toReturn;
+	var unregisterListeners = function() {
+
+	};
+
+	init();
 };
+
+Console.prototype = new Component();
+Console.prototype.constructor=Console;

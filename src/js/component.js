@@ -4,20 +4,16 @@ var Component = function(container, res, comp_id, comp_attributes) {
 	this.id = comp_id;
 	this.attributes = comp_attributes;
 	this.node;
+}
 
-	var self = this;
-
-	var loadContent = function() {
-		var content = new HtmlLoader().load(self.resource);
-		var node = document.createElement('div');
-		node.id = self.id;
-		for(var attr in self.attributes) {
-			node.setAttribute(attr, self.attributes[attr]);
-		}
-		node.innerHTML = content;
-		self.parent.appendChild(node);
-		self.node = node;
+Component.prototype.loadContent = function() {
+	var content = new HtmlLoader().load(this.resource);
+	var node = document.createElement('div');
+	node.id = this.id;
+	for(var attr in this.attributes) {
+		node.setAttribute(attr, this.attributes[attr]);
 	}
-
-	loadContent();
+	node.innerHTML = content;
+	this.parent.appendChild(node);
+	this.node = node;
 }

@@ -1,9 +1,16 @@
 var Toolbar = function(container) {
-	var toReturn = new Component(container, "toolbar.html", "toolbar", {class:"toolbar"});
-	var self = toReturn;
+	var toolboar;
 	
-	toReturn.registerListeners = function() {
-		var toolbar = document.getElementById("toolbar");
+	var self = this;
+
+	var init = function() {
+		Component.call(self, container, "toolbar.html", "toolbar", {class:"toolbar"});
+		self.loadContent();
+		toolbar = document.getElementById("toolbar");
+		registerListeners();
+	}
+
+	var registerListeners = function() {
 		var buttons = toolbar.getElementsByTagName("button");
 		for(var index = 0; index < buttons.length; index++) {
 			var button = buttons[index];
@@ -11,8 +18,12 @@ var Toolbar = function(container) {
 		}
 	};
 
-	toReturn.unregisterListeners = function() {
-		
+	var unregisterListeners = function() {
+		var buttons = toolbar.getElementsByTagName("button");
+		for(var index = 0; index < buttons.length; index++) {
+			var button = buttons[index];
+			button.removeEventListener("click", handleButton);
+		}
 	};
 
 	var handleButton = function(event) {
@@ -22,8 +33,14 @@ var Toolbar = function(container) {
 			var event = new FiddleEvent(Main.Events.consts.EVENT_RUN, "");
 			Main.Events.publish(event);
 		}
+		if(action == "start-over") {
+			var event = new FiddleEvent(Main.Events.consts.EVENT_CLEAR, "");
+			Main.Events.publish(event);
+		}
 	}
 
-	toReturn.registerListeners();
-	return self;
+	init();
 };
+
+Toolbar.prototype = new Component();
+Toolbar.prototype.constructor=Toolbar;

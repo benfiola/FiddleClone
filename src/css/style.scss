@@ -15,14 +15,15 @@ html {
 
 #toolbar {
 	@include outer-container;
+	.spacer {
+		@include span-columns(2);
+	}
 	button {
-		@include span-columns(4);
-		@include shift(4);
+		@include span-columns(3);
 		border: 0 none;
  		border-radius: 2px 2px 2px 2px;
   		color: #FFFFFF;
   		cursor: pointer;
-  		display: inline-block;
   		font-family: Arial,sans-serif;
   		font-size: 12px;
   		font-weight: bold;

@@ -1,23 +1,36 @@
 var Editor = function(container) {
-	var toReturn = new Component(container, "editor.html", "editor", {class:"section"});
+	var textAreaNode;
+	
+	var self = this;
+
+	var init = function() {
+		Component.call(self, container, "editor.html", "editor", {class:"section"});
+		self.loadContent();
+		textAreaNode = document.getElementById("editor-textarea");
+		registerListeners();
+	}
+
+	var onClear = function() {
+		textAreaNode.value = "";
+	}
 
 	var onKeyPress = function() {
-		var node = document.getElementById("editor-textarea");
-		var data = node.value;
-
-		var evt = new FiddleEvent(Main.Events.consts.EVENT_CHANGE, data);
+		var evt = new FiddleEvent(Main.Events.consts.EVENT_CHANGE, textAreaNode.value);
 		Main.Events.publish(evt);
 	};
 
-	toReturn.registerListeners = function() {
-		var node = document.getElementById("editor-textarea");
-		node.addEventListener("keyup", onKeyPress);
+	var registerListeners = function() {
+		textAreaNode.addEventListener("keyup", onKeyPress);
+		Main.Events.subscribe(Main.Events.consts.EVENT_CLEAR, onClear);
 	};
 
-	toReturn.unregisterListeners = function() {
-		node.removeEventListener("keyPress", onKeyPress);
+	var unregisterListeners = function() {
+		textAreaNode.removeEventListener("keyPress", onKeyPress);
+		Main.Events.unsubscribe(Main.Events.consts.EVENT_CLEAR, onClear);
 	};
 
-	toReturn.registerListeners();
-	return toReturn;
+	init();
 };
+
+Editor.prototype = new Component();
+Editor.prototype.constructor=Editor;
