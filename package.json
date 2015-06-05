@@ -1,0 +1,32 @@
+{
+  "name": "FiddleClone",
+  "version": "1.0.0",
+  "description": "My attempt to make a clone of jsFiddle.",
+  "main": "index.js",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "del": "^1.2.0",
+    "gulp-concat": "^2.5.2",
+    "gulp": "^3.9.0",
+    "gulp-sourcemaps": "^1.5.2",
+    "gulp-sass": "^2.0.1",
+    "node-bourbon": "^4.2.3",
+    "node-neat": "^1.7.2",
+    "rimraf": "^2.3.4",
+    "run-sequence": "^1.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benfiola/FiddleClone.git"
+  },
+  "author": "Ben Fiola",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benfiola/FiddleClone/issues"
+  },
+  "homepage": "https://github.com/benfiola/FiddleClone"
+}
