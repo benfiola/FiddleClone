@@ -1,50 +1,36 @@
 var Preview = function(container) {
 	var iframe;
+	var consoleScriptlet;
 	var iframeHtmlNode;
 	var iframeDocument;
 	var iframeWindow;
-	var state;
 	var self = this;
-
-	var STATES = {
-		preview:"preview",
-		running:"running"
-	};
 
 	var init = function() {
 		Component.call(self, container, "preview.html", "preview", {class:"section"});
 		self.loadContent();
 		iframe = window.frames['preview-iframe'];
 		iframeWindow = iframe.contentWindow;
-		iframeDocument = (iframe.contentDocument) ? iframe.contentDocument : iframe.contentWindow.document;
-		setState(STATES.preview);
+		iframeDocument = (iframe.contentDocument) ? iframe.contentDocument : iframeWindow.document;
+		consoleScriptlet = new FileLoader().load("resources/console-scriptlet.js");
 		registerListeners();
 	}
 
 	var onClear = function(event) {
-		setState(STATES.preview);
 		var htmlNode = getHtmlNode();
 		htmlNode.innerHTML = "";
 	}
 
 	var onChange = function(event) {
-		setState(STATES.preview);
 		var htmlNode = getHtmlNode();
 		htmlNode.innerHTML=event.data;
 	};
 
 	var onRun = function(event) {
-		//if(state == STATES.preview) {
-			setState(STATES.running);
-			var htmlNode = getHtmlNode();
-			iframeDocument.open('text/htmlreplace');
-			iframeDocument.write(process(htmlNode.innerHTML));
-			iframeDocument.close();
-		//} else {
-		//	var loadEvent = iframeDocument.createEvent('Event');
-		//	loadEvent.initEvent('load', false, false);
-		//	iframeWindow.dispatchEvent(loadEvent);
-		//}
+		var htmlNode = getHtmlNode();
+		iframeDocument.open('text/htmlreplace');
+		iframeDocument.write(process(htmlNode.innerHTML));
+		iframeDocument.close();
 	}
 
 	var registerListeners = function() {
@@ -62,18 +48,10 @@ var Preview = function(container) {
 	var getHtmlNode = function() {
 		return iframeDocument.getElementsByTagName("html")[0];
 	}
-
-	var setState = function(s) {
-		state = s;
-	}
-
+	
 	var process = function(data) {
-		var toReturn = getConsoleScriptlet() + data;
+		var toReturn = consoleScriptlet + data;
 		return toReturn;
-	}
-
-	var getConsoleScriptlet = function() {
-		return new FileLoader().load("resources/console-scriptlet.js");
 	}
 
 	init();
