@@ -34,17 +34,17 @@ var Preview = function(container) {
 	};
 
 	var onRun = function(event) {
-		if(state == STATES.preview) {
+		//if(state == STATES.preview) {
 			setState(STATES.running);
 			var htmlNode = getHtmlNode();
 			iframeDocument.open('text/htmlreplace');
-			iframeDocument.write(htmlNode.innerHTML);
+			iframeDocument.write(process(htmlNode.innerHTML));
 			iframeDocument.close();
-		} else {
-			var loadEvent = iframeDocument.createEvent('Event');
-			loadEvent.initEvent('load', false, false);
-			iframeWindow.dispatchEvent(loadEvent);
-		}
+		//} else {
+		//	var loadEvent = iframeDocument.createEvent('Event');
+		//	loadEvent.initEvent('load', false, false);
+		//	iframeWindow.dispatchEvent(loadEvent);
+		//}
 	}
 
 	var registerListeners = function() {
@@ -65,6 +65,15 @@ var Preview = function(container) {
 
 	var setState = function(s) {
 		state = s;
+	}
+
+	var process = function(data) {
+		var toReturn = getConsoleScriptlet() + data;
+		return toReturn;
+	}
+
+	var getConsoleScriptlet = function() {
+		return new FileLoader().load("resources/console-scriptlet.js");
 	}
 
 	init();

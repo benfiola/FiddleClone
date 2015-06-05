@@ -6,7 +6,7 @@ var Toolbar = function(container) {
 	var init = function() {
 		Component.call(self, container, "toolbar.html", "toolbar", {class:"toolbar"});
 		self.loadContent();
-		toolbar = document.getElementById("toolbar");
+		toolbar = self.node;
 		registerListeners();
 	}
 
@@ -30,7 +30,9 @@ var Toolbar = function(container) {
 		var button = event.target;
 		var action = button.getAttribute("action");
 		if(action == "run-code") {
-			var event = new FiddleEvent(Main.Events.consts.EVENT_RUN, "");
+			var event = new FiddleEvent(Main.Events.consts.EVENT_PRE_RUN, "");
+			Main.Events.publish(event);
+			event = new FiddleEvent(Main.Events.consts.EVENT_RUN, "");
 			Main.Events.publish(event);
 		}
 		if(action == "start-over") {

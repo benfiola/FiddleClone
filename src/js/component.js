@@ -7,7 +7,7 @@ var Component = function(container, res, comp_id, comp_attributes) {
 }
 
 Component.prototype.loadContent = function() {
-	var content = new HtmlLoader().load(this.resource);
+	var content = new FileLoader().load(this.resource);
 	var node = document.createElement('div');
 	node.id = this.id;
 	for(var attr in this.attributes) {

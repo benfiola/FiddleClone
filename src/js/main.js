@@ -12,6 +12,7 @@ var App = function() {
 		this.consts = {
 			EVENT_CHANGE:"change",
 			EVENT_CONSOLE:"console",
+			EVENT_PRE_RUN:"pre-run",
 			EVENT_RUN:"run",
 			EVENT_CLEAR:"clear"
 		};

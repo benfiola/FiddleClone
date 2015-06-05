@@ -14,6 +14,10 @@ gulp.task('html', function() {
 	return gulp.src('src/html/*.html').pipe(gulp.dest('build'));
 });
 
+gulp.task('resources', function() {
+	return gulp.src('src/resources/*').pipe(gulp.dest('build/resources'));
+})
+
 gulp.task('js', function() {
 	return gulp.src('src/js/*.js').pipe(concat('app.js')).pipe(gulp.dest('build'));
 });
@@ -37,6 +41,12 @@ gulp.task('clean-html', function(callback) {
 	], callback);
 });
 
+gulp.task('clean-resources', function(callback) {
+	del([
+		'build/resources'
+	], callback);
+});
+
 gulp.task('clean-css', function(callback) {
 	del([
 		'build/*.css'
@@ -44,15 +54,15 @@ gulp.task('clean-css', function(callback) {
 });
 
 gulp.task('clean', function(callback) {
-	runsequence('clean-js', 'clean-html', 'clean-css', callback);
+	runsequence('clean-js', 'clean-html', 'clean-css', 'clean-resources', callback);
 });
 
 gulp.task('dev', function(callback) {
-	runsequence('clean', 'html', 'js-sm', 'css', callback);
+	runsequence('clean', 'html', 'resources', 'js-sm', 'css', callback);
 });
 
 gulp.task('prod', function(callback) { 
-	runsequence('clean', 'html', 'js', 'css', callback);
+	runsequence('clean', 'html', 'resources', 'js', 'css', callback);
 });
 
 gulp.task('default', function(callback) {

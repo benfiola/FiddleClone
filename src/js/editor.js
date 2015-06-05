@@ -6,7 +6,7 @@ var Editor = function(container) {
 	var init = function() {
 		Component.call(self, container, "editor.html", "editor", {class:"section"});
 		self.loadContent();
-		textAreaNode = document.getElementById("editor-textarea");
+		textAreaNode = self.node.getElementsByTagName("textarea")[0];
 		registerListeners();
 	}
 
