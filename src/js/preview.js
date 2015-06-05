@@ -1,9 +1,15 @@
 var Preview = function(container) {
 	var iframe;
+	var iframeHtmlNode;
 	var iframeDocument;
 	var iframeWindow;
-
+	var state;
 	var self = this;
+
+	var STATES = {
+		preview:"preview",
+		running:"running"
+	};
 
 	var init = function() {
 		Component.call(self, container, "preview.html", "preview", {class:"section"});
@@ -11,23 +17,34 @@ var Preview = function(container) {
 		iframe = window.frames['preview-iframe'];
 		iframeWindow = iframe.contentWindow;
 		iframeDocument = (iframe.contentDocument) ? iframe.contentDocument : iframe.contentWindow.document;
+		setState(STATES.preview);
 		registerListeners();
 	}
 
 	var onClear = function(event) {
-		var htmlNode = iframeDocument.getElementsByTagName("html")[0];
+		setState(STATES.preview);
+		var htmlNode = getHtmlNode();
 		htmlNode.innerHTML = "";
 	}
 
 	var onChange = function(event) {
-		var htmlNode = iframeDocument.getElementsByTagName("html")[0];
+		setState(STATES.preview);
+		var htmlNode = getHtmlNode();
 		htmlNode.innerHTML=event.data;
 	};
 
 	var onRun = function(event) {
-		var loadEvent = iframeDocument.createEvent('Event');
-		loadEvent.initEvent('load', false, false);
-		iframeWindow.dispatchEvent(loadEvent);
+		if(state == STATES.preview) {
+			setState(STATES.running);
+			var htmlNode = getHtmlNode();
+			iframeDocument.open('text/htmlreplace');
+			iframeDocument.write(htmlNode.innerHTML);
+			iframeDocument.close();
+		} else {
+			var loadEvent = iframeDocument.createEvent('Event');
+			loadEvent.initEvent('load', false, false);
+			iframeWindow.dispatchEvent(loadEvent);
+		}
 	}
 
 	var registerListeners = function() {
@@ -41,6 +58,14 @@ var Preview = function(container) {
 		Main.Events.unsubscribe(Main.Events.consts.EVENT_RUN, onRun);
 		Main.Events.unsubscribe(Main.Events.consts.EVENT_CLEAR, onClear);
 	};
+
+	var getHtmlNode = function() {
+		return iframeDocument.getElementsByTagName("html")[0];
+	}
+
+	var setState = function(s) {
+		state = s;
+	}
 
 	init();
 };
